@@ -1,0 +1,17 @@
+{% extends 'applications/base.html' %}
+{% block title %}Dashboard · JobTrack{% endblock %}
+{% block content %}
+<section class="page-heading"><div><p class="eyebrow">YOUR JOB SEARCH</p><h1>Application dashboard</h1><p class="muted">Track every opportunity from application to offer.</p></div><a class="button primary" href="{% url 'application_create' %}">＋ Add application</a></section>
+<section class="stats">
+  <div class="stat-card"><span>Total applications</span><strong>{{ total_count }}</strong></div>
+  <div class="stat-card"><span>Interviews</span><strong>{{ interview_count }}</strong></div>
+  <div class="stat-card"><span>Offers</span><strong>{{ offer_count }}</strong></div>
+  <div class="stat-card"><span>Rejected</span><strong>{{ rejected_count }}</strong></div>
+</section>
+<section class="panel">
+  <form class="filters" method="get"><input name="q" value="{{ query }}" placeholder="Search company, role, notes…"><select name="status"><option value="">All statuses</option>{% for value,label in status_choices %}<option value="{{ value }}" {% if selected_status == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select><button class="button secondary" type="submit">Filter</button>{% if query or selected_status %}<a class="clear" href="{% url 'dashboard' %}">Clear</a>{% endif %}</form>
+  {% if applications %}<div class="table-wrap"><table><thead><tr><th>Company / role</th><th>Applied date</th><th>Status</th><th>Notes</th><th>Actions</th></tr></thead><tbody>
+  {% for item in applications %}<tr><td><strong>{{ item.company }}</strong><div class="muted small">{{ item.role }}{% if item.job_url %} · <a href="{{ item.job_url }}" target="_blank" rel="noopener">Job post ↗</a>{% endif %}</div></td><td>{{ item.applied_date|date:'d M Y' }}</td><td><span class="status status-{{ item.status|lower }}">{{ item.get_status_display }}</span></td><td class="notes">{{ item.notes|default:'—'|truncatechars:65 }}</td><td class="actions"><a href="{% url 'application_edit' item.pk %}">Edit</a><a class="danger-text" href="{% url 'application_delete' item.pk %}">Delete</a></td></tr>{% endfor %}
+  </tbody></table></div>{% else %}<div class="empty"><div class="empty-icon">↗</div><h2>No applications found</h2><p class="muted">Add your first job application or change your search filters.</p><a class="button primary" href="{% url 'application_create' %}">Add an application</a></div>{% endif %}
+</section>
+{% endblock %}

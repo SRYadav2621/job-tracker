@@ -1,0 +1,10 @@
+{% extends 'applications/base.html' %}
+{% block title %}Log in · JobTrack{% endblock %}
+{% block content %}
+<div class="auth-card"><h1>Welcome back</h1><p class="muted">Log in to manage your applications.</p>
+<form method="post">{% csrf_token %}{{ form.non_field_errors }}
+  <label for="id_username">Username</label>{{ form.username }}
+  <label for="id_password">Password</label>{{ form.password }}
+  <button class="button primary full" type="submit">Log in</button>
+</form><p class="muted small">First time here? Create an account with the command <code>python manage.py createsuperuser</code> or add registration as a next feature.</p></div>
+{% endblock %}
