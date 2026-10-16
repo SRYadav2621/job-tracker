@@ -4,9 +4,14 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'dev-only-change-this-key-before-deployment')
 DEBUG = os.getenv('DJANGO_DEBUG', 'True').lower() == 'true'
-ALLOWED_HOSTS = ["job-tracker-l7us-d7zdvk10n-sryadavs-projects.vercel.app",
+
+ALLOWED_HOSTS = [
+    "job-tracker-l7us.vercel.app",
+    "job-tracker-l7us-d7zdvk10n-sryadavs-projects.vercel.app",
     "localhost",
-    "127.0.0.1",]
+    "127.0.0.1",
+]
+
 
 INSTALLED_APPS = [
     'django.contrib.admin', 'django.contrib.auth', 'django.contrib.contenttypes',
